@@ -12,8 +12,8 @@ export default function Document() {
         ></link>
         <script
           type="text/javascript"
-          src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f6f238c69d0126a5c0c556b920041bc9"
-          async
+          defer
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=24b3b45454423787cba0b4a06f4b2937&autoload=false`}
         ></script>
         <meta name="theme-color" content="#fff" />
       </Head>
