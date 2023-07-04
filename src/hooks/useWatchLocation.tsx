@@ -1,8 +1,8 @@
 import { useRef, useState, useEffect } from "react"
 
 interface ILocation {
-  latitude: number
-  longitude: number
+  lat: number
+  lng: number
 }
 
 const useWatchLocation = (option = {}) => {
@@ -13,8 +13,8 @@ const useWatchLocation = (option = {}) => {
   const handleSuccess = (pos: GeolocationPosition) => {
     const { latitude, longitude } = pos.coords
     setLocation({
-      latitude,
-      longitude,
+      lat: latitude,
+      lng: longitude,
     })
   }
 
