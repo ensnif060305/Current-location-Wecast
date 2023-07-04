@@ -1,20 +1,19 @@
 import { NextPage } from "next"
 import styled from "@emotion/styled"
-import { useEffect, useState } from "react"
 import useWatchLocation from "@/hooks/useWatchLocation"
-import KaKaoMap from "@/components/mapMarker/mapMarker"
+import KaKaoMap from "../components/mapMarker/KaKaoMap"
+import axios from "axios"
+import { useEffect } from "react"
 
 const Main: NextPage = () => {
   const { location, cancelWatchLocation, error } = useWatchLocation()
-
+  
   return (
     <>
       <div>
         <header></header>
         <section>
-          <div>{location?.latitude}</div>
-          <div>{location?.longitude}</div>
-          <KaKaoMap />
+          <KaKaoMap location={location} />
         </section>
         <footer></footer>
       </div>
