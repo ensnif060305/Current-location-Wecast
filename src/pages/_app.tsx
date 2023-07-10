@@ -1,9 +1,25 @@
 import Head from "next/head"
 import type { AppProps } from "next/app"
 import { Global } from "@emotion/react"
+import { useState } from "react"
 import globalStyle from "../styles/globalStyle"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 
 export default function App({ Component, pageProps }: AppProps) {
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            retry: 0,
+            staleTime: 1000,
+            refetchInterval: 0,
+            refetchOnWindowFocus: false,
+          },
+        },
+      }),
+  )
   return (
     <>
       <Head>
@@ -13,7 +29,10 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Global styles={globalStyle} />
-      <Component {...pageProps} />
+      <QueryClientProvider client={queryClient}>
+        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+        <Component {...pageProps} />
+      </QueryClientProvider>
     </>
   )
 }
