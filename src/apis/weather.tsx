@@ -1,31 +1,26 @@
 import axios from "axios"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { useEffect, useState } from "react"
-
+import { Response } from "./type"
 const ServiceKey = process.env.NEXT_PUBLIC_WEATHER_API_SERVICE_KEY
 
-export const useGetWeather = (x = 0, y = 0) => {
+export const useGetWeather = (boo: boolean, data: { x: number; y: number }) => {
   const queryClient = useQueryClient()
   const fetch = async (): Promise<Response> =>
-    (
-      await axios.get(
-        "http://apis.data.go.kr/13ㅈ60000/VilageFcstInfoService_2.0/getUltraSrtNcst",
-        {
-          params: {
-            serviceKey: ServiceKey,
-            pageNo: "1",
-            numOfRows: "1000",
-            dataType: "JSON",
-            base_date: "20230707",
-            base_time: "0600",
-            nx: x,
-            ny: y,
-          },
-        },
-      )
-    ).data
+    await axios.get("http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst", {
+      params: {
+        serviceKey: ServiceKey,
+        pageNo: "1",
+        numOfRows: "1000",
+        dataType: "JSON",
+        base_date: "20230710",
+        base_time: "0830",
+        nx: data.x,
+        ny: data.y,
+      },
+    })
 
-  return useQuery(["short term weather"], () => fetch(), {
+  return useQuery(["short term weather", data.x, data.y], () => fetch(), {
+    enabled: boo,
     onSuccess: () => {
       queryClient.invalidateQueries(["short term weather"])
     },
